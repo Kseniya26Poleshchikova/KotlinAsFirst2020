@@ -65,7 +65,7 @@ fun main() {
  * Пользователь задает время в часах, минутах и секундах, например, 8:20:35.
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
-fun seconds(hours: Int, minutes: Int, seconds: Int) = (hours * 3600) + (minutes * 60) + seconds
+fun seconds(hours: Int, minutes: Int, seconds: Int) = hours * 3600 + minutes * 60 + seconds
 /**
  * Тривиальная (1 балл)
  *
@@ -74,7 +74,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int) = (hours * 3600) + (minutes 
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double =
-    ((sagenes * 48) + (arshins * 16) + vershoks) * 0.04445
+    (sagenes * 48 + arshins * 16 + vershoks) * 0.04445
 
 
 
@@ -85,7 +85,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double =
  * Пользователь задает угол в градусах, минутах и секундах (например, 36 градусов 14 минут 35 секунд).
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
-fun angleInRadian(deg: Int, min: Int, sec: Int): Double = (deg * 3600 + min * 60 + sec) * (PI / (180 * 60 * 60))
+fun angleInRadian(deg: Int, min: Int, sec: Int): Double = (deg * 3600 + min * 60 + sec) * (PI / 180 / 60 / 60)
 
 /**
  * Тривиальная (1 балл)
@@ -94,8 +94,8 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double = (deg * 3600 + min * 60
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
 fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
-    val a = (x1 - x2) * (x1 - x2)
-    val b = (y1 - y2) * (y1 - y2)
+    val a = sqr(x1 - x2)
+    val b = sqr(y1 - y2)
     val c = a + b
     return sqrt(c)
 }
