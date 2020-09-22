@@ -18,7 +18,10 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean {
+    return if ((number / 1000 + (number % 1000) / 100) == ((number % 100) / 10 + number % 10)) true
+    else false
+}
 
 /**
  * Простая (2 балла)
@@ -36,10 +39,16 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int = TODO()
-
+fun daysInMonth(month: Int, year: Int): Int {
+    if ((month % 10 == 2) && ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 > 0)))) return 29
+    if ((month % 10 == 2) && (year % 400 > 0)) return 28
+    return when (month % 10) {
+        1, 3, 5, 7, 8, 10, 12 -> 31
+        else -> 30
+    }
+}
 /**
- * Простая (2 балла)
+ * * Простая (2 балла)
  *
  * Проверить, лежит ли окружность с центром в (x1, y1) и радиусом r1 целиком внутри
  * окружности с центром в (x2, y2) и радиусом r2.
