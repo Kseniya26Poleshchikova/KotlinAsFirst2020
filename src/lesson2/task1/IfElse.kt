@@ -148,7 +148,7 @@ fun rookOrBishopThreatens(
 
 
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    if (a > (b + c) || b > (c + a) || c > (a + b)) return -1
+    if (a > b + c || b > c + a || c > a + b) return -1
     return when {
         (sqr(a) + sqr(b) == sqr(c) || sqr(b) + sqr(c) == sqr(a) || sqr(c) + sqr(a) == sqr(b)) -> 1
         (sqr(a) + sqr(b) < sqr(c) || sqr(b) + sqr(c) < sqr(a) || sqr(a) + sqr(c) < sqr(b)) -> 2
@@ -167,14 +167,17 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     if (c > b || a > d) return -1
+    if (b == c) return 0
     return when {
-        (a < c) && (b < d) -> b - c
-        (a > c) && (b < d) -> b - a
-        (a > c) && (b > d) -> d - a
-        (b > c) && (b > d) -> d - c
-        else -> 0
+        b - a > d - c -> d - c
+        d - c == b - a -> d - a
+        d - a > b - c -> b - c
+        else -> b - a
     }
 }
+
+
+
 
 
 
