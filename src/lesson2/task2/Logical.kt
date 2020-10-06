@@ -3,6 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import java.lang.Math.min
 
 /**
  * Пример
@@ -41,9 +42,9 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
 fun daysInMonth(month: Int, year: Int): Int {
     if (month == 2 && (year % 400 == 0 || ((year % 4 == 0) && (year % 100 > 0)))) return 29
     if (month == 2 && year % 400 > 0) return 28
-    return when (month % 10) {
-        0, 1, 2, 3, 5, 7, 8 -> 31
-        else -> 30
+    return when (month) {
+        2, 4, 6, 9, 11 -> 30
+        else -> 31
     }
 }
 /**
@@ -67,35 +68,9 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    var x = 0
-    var y = 0
-    if (a < b && a < c) {
-        x = a
-        y = if (b < c) {
-            b
-        } else {
-            c
-        }
-    }
-    if (b < c && b < a) {
-        x = b
-        y = if (a < c) {
-            a
-        } else {
-            c
-        }
-    }
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
+    a <= s && b <= r || b <= s && a <= r ||
+            b <= r && c <= s || c <= r && b <= s ||
+            a <= r && c <= s || a <= s && c <= r
 
-    if (c < a && c < b) {
-        x = c
-        y = if (a < b) {
-            a
-        } else {
-            b
-        }
-    }
-
-    return (x <= s && y <= r) || (x <= r && y <= s)
-}
 
