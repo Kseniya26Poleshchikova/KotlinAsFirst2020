@@ -3,6 +3,8 @@
 package lesson3.task1
 
 import kotlin.math.sqrt
+import kotlin.math.abs
+
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -72,7 +74,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 0
+    var number = n
+    while (n > 0) {
+        count ++
+    }
+    number /= 10
+    return count
+}
 
 /**
  * Простая (2 балла)
@@ -80,7 +90,10 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    if ((n == 1) or (n == 2)) return 1
+    else return fib(n - 1) + fib(n - 2)
+}
 
 /**
  * Простая (2 балла)
@@ -129,7 +142,21 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var del = 0
+    var m1 = m
+    var n1 = n
+    while (m1 != n1) {
+        if (m1 > n1) {
+            m1 -= n1
+        }
+        else {
+            n1 -= m1
+        }
+    }
+    if (m1 == 1) return true
+    else return false
+}
 
 /**
  * Средняя (3 балла)
@@ -158,7 +185,24 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    var number = n
+    var d = 1
+    var res = 0
+    var digit = 0
+    if (n < 0) return false
+    while (number / d >= 10){
+        d *= 10
+    }
+    while (number != 0) {
+        res = number / d
+        digit = number % 10
+        if (res != digit) return false
+        number = (number % d) / 10
+        d /= 100
+    }
+    return true
+}
 
 /**
  * Средняя (3 балла)
@@ -201,7 +245,35 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+
+
+
+fun squareSequenceDigit(n: Int): Int {
+    var i = 0
+    var number = 0
+    var sum = 0
+    var numberResult = 0
+    var count = 1
+    var m = 10
+    while (sum < n) {
+        i++
+        number = i * i
+        while (number / m != 0) {
+            m *= 10
+            count++
+        }
+        sum += count
+    }
+    sum -= count
+    m /= 10
+    while (sum != n) {
+        numberResult = (number / m) % 10
+        m /= 10
+        sum++
+    }
+    return numberResult
+
+}
 
 /**
  * Сложная (5 баллов)
