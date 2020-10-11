@@ -19,7 +19,7 @@ import kotlin.math.abs
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -77,10 +77,11 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 0
     var number = n
+    if (n == 0) return 1
     while (n > 0) {
-        count ++
+        count++
+        number /= 10
     }
-    number /= 10
     return count
 }
 
@@ -91,8 +92,8 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    if ((n == 1) or (n == 2)) return 1
-    else return fib(n - 1) + fib(n - 2)
+    return if ((n == 1) or (n == 2)) 1
+    else fib(n - 1) + fib(n - 2)
 }
 
 /**
@@ -143,19 +144,16 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var del = 0
     var m1 = m
     var n1 = n
     while (m1 != n1) {
         if (m1 > n1) {
             m1 -= n1
-        }
-        else {
+        } else {
             n1 -= m1
         }
     }
-    if (m1 == 1) return true
-    else return false
+    return m1 == 1
 }
 
 /**
@@ -191,7 +189,7 @@ fun isPalindrome(n: Int): Boolean {
     var res = 0
     var digit = 0
     if (n < 0) return false
-    while (number / d >= 10){
+    while (number / d >= 10) {
         d *= 10
     }
     while (number != 0) {
