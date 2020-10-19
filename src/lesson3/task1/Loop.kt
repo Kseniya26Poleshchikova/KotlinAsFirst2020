@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import kotlin.math.sqrt
 import kotlin.math.abs
 
@@ -77,8 +78,8 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 0
     var number = n
-    if (n == 0) return 1
-    while (n > 0) {
+    if (number == 0) return 1
+    while (number > 0) {
         count++
         number /= 10
     }
@@ -92,8 +93,16 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    return if ((n == 1) or (n == 2)) 1
-    else fib(n - 1) + fib(n - 2)
+    var f1 = 1
+    var f2 = 1
+    var d = 0
+    if (n <= 2) return 1
+    for (i in 3..n) {
+        d = f1
+        f1 = f2
+        f2 = f1 + d
+    }
+return f2
 }
 
 /**
@@ -146,11 +155,11 @@ fun lcm(m: Int, n: Int): Int = TODO()
 fun isCoPrime(m: Int, n: Int): Boolean {
     var m1 = m
     var n1 = n
-    while (m1 != n1) {
+    while (m1 * n1 != 0) {
         if (m1 > n1) {
-            m1 -= n1
+            m1 %= n1
         } else {
-            n1 -= m1
+            n1 %= m1
         }
     }
     return m1 == 1
@@ -257,8 +266,8 @@ fun squareSequenceDigit(n: Int): Int {
         i++
         number = i * i
         while (number / m != 0) {
+            count = digitNumber(sqr(i))
             m *= 10
-            count++
         }
         sum += count
     }
@@ -273,6 +282,9 @@ fun squareSequenceDigit(n: Int): Int {
 
 }
 
+
+
+
 /**
  * Сложная (5 баллов)
  *
@@ -283,3 +295,9 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int = TODO()
+
+
+
+
+
+
