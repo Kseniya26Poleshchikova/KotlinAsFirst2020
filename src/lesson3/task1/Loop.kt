@@ -95,14 +95,13 @@ fun digitNumber(n: Int): Int {
 fun fib(n: Int): Int {
     var f1 = 1
     var f2 = 1
-    var d = 0
     if (n <= 2) return 1
     for (i in 3..n) {
-        d = f1
+        val d = f1
         f1 = f2
         f2 = f1 + d
     }
-return f2
+ return f2
 }
 
 /**
@@ -264,9 +263,9 @@ fun squareSequenceDigit(n: Int): Int {
     var m = 10
     while (sum < n) {
         i++
-        number = i * i
-        while (number / m != 0) {
-            count = digitNumber(sqr(i))
+        number = sqr(i)
+        if (number / m > 0) {
+            count = digitNumber(number)
             m *= 10
         }
         sum += count
