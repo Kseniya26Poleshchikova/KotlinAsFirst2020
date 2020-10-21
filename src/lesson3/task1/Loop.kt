@@ -17,17 +17,17 @@ import kotlin.math.abs
 fun intoLong(n: Long, i: Int): Long {
     var j = i
     var result = n
-    while (j > 1) {
+    for (i in 1..j - 1) {
         result *= n
         j--
     }
     return result
 }
 
-fun digInNumb(i: Int, m: Int): Int {
+fun digInNumb(index: Int, m: Int): Int {
     var m1 = m
-    val k = intoLong(10L, i)
-    while (m1 >= k) {
+    val k = intoLong(10L, index).toInt()
+    if (m1 >= k) {
         m1 /= 10
     }
     return m1 % 10
