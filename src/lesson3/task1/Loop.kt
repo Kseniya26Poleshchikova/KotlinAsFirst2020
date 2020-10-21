@@ -12,6 +12,27 @@ import kotlin.math.abs
 // Рекомендуемое количество баллов = 7
 // Вместе с предыдущими уроками = 16/21
 
+// Функции для задач на 4 и 5 баллов
+
+fun intoLong(n: Long, i: Int): Long {
+    var j = i
+    var result = n
+    while (j > 1) {
+        result *= n
+        j--
+    }
+    return result
+}
+
+fun digInNumb(i: Int, m: Int): Int {
+    var m1 = m
+    val k = intoLong(10L, i)
+    while (m1 >= k) {
+        m1 /= 10
+    }
+    return m1 % 10
+}
+
 /**
  * Пример
  *
@@ -101,7 +122,7 @@ fun fib(n: Int): Int {
         f1 = f2
         f2 = f1 + d
     }
- return f2
+    return f2
 }
 
 /**
@@ -253,35 +274,18 @@ fun cos(x: Double, eps: Double): Double = TODO()
  */
 
 
-
 fun squareSequenceDigit(n: Int): Int {
+    var num = n
     var i = 0
-    var number = 0
-    var sum = 0
-    var numberResult = 0
-    var count = 1
-    var m = 10
-    while (sum < n) {
+    var count = 0
+    while (num > 0) {
         i++
-        number = sqr(i)
-        if (number / m > 0) {
-            count = digitNumber(number)
-            m *= 10
-        }
-        sum += count
+        count = digitNumber(sqr(i))
+        num -= count
     }
-    sum -= count
-    m /= 10
-    while (sum != n) {
-        numberResult = (number / m) % 10
-        m /= 10
-        sum++
-    }
-    return numberResult
-
+    num += count
+    return digInNumb(num, sqr(i))
 }
-
-
 
 
 /**
@@ -293,8 +297,18 @@ fun squareSequenceDigit(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
-
+fun fibSequenceDigit(n: Int): Int {
+    var i = 0
+    var num = n
+    var count = 0
+    while (num > 0) {
+        i++
+        count = digitNumber(fib(i))
+        num -= count
+    }
+    num += count
+    return digInNumb(num, fib(i))
+}
 
 
 
