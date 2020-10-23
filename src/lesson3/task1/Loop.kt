@@ -14,7 +14,7 @@ import kotlin.math.abs
 
 // Функции для задач на 4 и 5 баллов
 
-fun intoLong(n: Int, i: Int): Int {
+fun intoLong(n: Long, i: Int): Long {
     var result = n
     for (i in 1 until i) {
         result *= n
@@ -24,11 +24,9 @@ fun intoLong(n: Int, i: Int): Int {
 
 fun digInNumb(index: Int, m: Int): Int {
     var m1 = m
-    val k = intoLong(10, index)
-    if (m1 >= 0) {
-        while (m1 >= k) {
-            m1 /= 10
-        }
+    val k = intoLong(10L, index)
+    while (m1 >= k) {
+        m1 /= 10
     }
     return m1 % 10
 }
