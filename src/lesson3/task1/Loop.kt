@@ -97,13 +97,18 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 0
     var number = n
-    while (number != 0) {
-        count++
+    do {
+        if (number != 0) {
+            count++
+        }
+        if (number == 0) {
+            count = 1
+        }
         number /= 10
-    }
-    if (count == 0) return 1
-    else return count
+    } while (number > 0)
+    return count
 }
+
 
 /**
  * Простая (2 балла)
@@ -173,17 +178,14 @@ fun lcm(m: Int, n: Int): Int = TODO()
 fun isCoPrime(m: Int, n: Int): Boolean {
     var m1 = m
     var n1 = n
-    var nod = 0
-    while (m1 * n1 != 0) {
+    while (m1 != 0 && n1 != 0) {
         if (m1 > n1) {
             m1 %= n1
-            nod = n1
         } else {
             n1 %= m1
-            nod = m1
         }
     }
-    return nod == 1
+    return m1 == 1
 }
 
 /**
