@@ -97,15 +97,13 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 0
     var number = n
-    do {
-        if (number != 0) {
-            count++
-        }
-        if (number == 0) {
-            count = 1
-        }
+    if (number == 0) {
+        count = 1
+    }
+    while (number != 0) {
+        count++
         number /= 10
-    } while (number > 0)
+    }
     return count
 }
 
@@ -185,7 +183,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
             n1 %= m1
         }
     }
-    return m1 == 1
+    return m1 == 1 || n1 == 1
 }
 
 /**
