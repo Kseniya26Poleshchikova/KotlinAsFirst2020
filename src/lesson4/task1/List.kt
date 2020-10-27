@@ -2,6 +2,7 @@
 
 package lesson4.task1
 
+import kotlinx.html.attributes.stringSetDecode
 import lesson1.task1.discriminant
 import kotlin.math.sqrt
 
@@ -127,7 +128,15 @@ fun abs(v: List<Double>): Double = TODO()
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double {
+    if (list.isEmpty()) return 0.0
+    var count = 0
+    val result = list.sum()
+    for (element in list) {
+        count++
+    }
+    return result / count
+}
 
 /**
  * Средняя (3 балла)
@@ -137,7 +146,17 @@ fun mean(list: List<Double>): Double = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    var count = 0
+    for (element in list) {
+        count++
+    }
+    val midSum = list.sum() / count
+    for ((index, element) in list.withIndex()) {
+        list[index] = element - midSum
+    }
+    return list
+}
 
 /**
  * Средняя (3 балла)
@@ -168,7 +187,16 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
+fun accumulate(list: MutableList<Int>): MutableList<Int> {
+    var sum = 1
+    for (i in 1 until list.size) {
+        sum += list[i]
+        list[i] = sum
+    }
+    return list
+}
+
+
 
 /**
  * Средняя (3 балла)
@@ -177,7 +205,18 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    var d = 2
+    var n1 = n
+    val r = mutableListOf<Int>()
+    while (n1 > 1) {
+        if (n1 % d == 0) {
+            r.add(d)
+            n1 /= d
+        } else d++
+    }
+    return r
+}
 
 /**
  * Сложная (4 балла)
@@ -186,7 +225,20 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String {
+    var d = 2
+    var n1 = n
+    val r = mutableListOf<Int>()
+    while (n1 > 1) {
+        if (n1 % d == 0) {
+            r.add(d)
+            n1 /= d
+        } else {
+            d++
+        }
+    }
+    return r.joinToString("*")
+}
 
 /**
  * Средняя (3 балла)
@@ -241,7 +293,21 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var n1 = n
+    val arab = arrayOf(0, 1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    val rim = arrayOf("", "I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    var i = 13
+    var s: String = ""
+    while (n1 != 0) {
+        while (arab[i] <= n1) {
+            s += rim[i]
+            n1 -= arab[i]
+        }
+        i--
+    }
+    return s
+}
 
 /**
  * Очень сложная (7 баллов)
@@ -249,5 +315,6 @@ fun roman(n: Int): String = TODO()
  * Записать заданное натуральное число 1..999999 прописью по-русски.
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
- */
+ * */
 fun russian(n: Int): String = TODO()
+
