@@ -130,12 +130,9 @@ fun abs(v: List<Double>): Double = TODO()
  */
 fun mean(list: List<Double>): Double {
     if (list.isEmpty()) return 0.0
-    var count = 0
     val result = list.sum()
-    for (element in list) {
-        count++
-    }
-    return result / count
+    val size = list.size
+    return result / size
 }
 
 /**
@@ -147,13 +144,9 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    var count = 0
-    for (element in list) {
-        count++
-    }
-    val midSum = list.sum() / count
+    val midSum = mean(list)
     for ((index, element) in list.withIndex()) {
-        list[index] = element - midSum
+        list[index] -= midSum
     }
     return list
 }
@@ -197,7 +190,6 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
 }
 
 
-
 /**
  * Средняя (3 балла)
  *
@@ -225,20 +217,8 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String {
-    var d = 2
-    var n1 = n
-    val r = mutableListOf<Int>()
-    while (n1 > 1) {
-        if (n1 % d == 0) {
-            r.add(d)
-            n1 /= d
-        } else {
-            d++
-        }
-    }
-    return r.joinToString("*")
-}
+fun factorizeToString(n: Int): String = factorize(n).joinToString("*")
+
 
 /**
  * Средняя (3 балла)
@@ -295,16 +275,14 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  */
 fun roman(n: Int): String {
     var n1 = n
-    val arab = arrayOf(0, 1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
-    val rim = arrayOf("", "I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
-    var i = 13
-    var s: String = ""
-    while (n1 != 0) {
-        while (arab[i] <= n1) {
+    val arab = arrayOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    val rim = arrayOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    var s = ""
+    for (i in 12 downTo 0) {
+        while (n1 >= arab[i]) {
             s += rim[i]
             n1 -= arab[i]
         }
-        i--
     }
     return s
 }
