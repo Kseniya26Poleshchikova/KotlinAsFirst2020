@@ -130,9 +130,7 @@ fun abs(v: List<Double>): Double = TODO()
  */
 fun mean(list: List<Double>): Double {
     if (list.isEmpty()) return 0.0
-    val result = list.sum()
-    val size = list.size
-    return result / size
+    return list.sum() / list.size
 }
 
 /**
@@ -181,8 +179,8 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-    var sum = 1
-    for (i in 1 until list.size) {
+    var sum = 0
+    for (i in 0 until list.size) {
         sum += list[i]
         list[i] = sum
     }
