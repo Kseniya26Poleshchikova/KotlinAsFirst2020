@@ -2,6 +2,9 @@
 
 package lesson5.task1
 
+import kotlinx.html.Entities
+import lesson8.task1.findNearestCirclePair
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -96,7 +99,8 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = grades.entries.groupBy({ it.value }, { it.key })
+
 
 /**
  * Простая (2 балла)
@@ -168,6 +172,8 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
 
+
+
 /**
  * Средняя (4 балла)
  *
@@ -208,7 +214,14 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val r = mutableMapOf<String, Int>()
+    for (element in list) {
+        if (!r.contains(element)) r[element] = 1
+        else r[element] = r[element]!!.plus(1)
+    }
+    return r.filter { it.value > 1 }
+}
 
 /**
  * Средняя (3 балла)
@@ -260,6 +273,8 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  */
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
 
+
+
 /**
  * Сложная (6 баллов)
  *
@@ -277,7 +292,33 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var ind = -1
+    var j1 = -1
+    var j2 = -1
+    val set = list.toSet()
+    if (number % 2 == 0) {
+        for (element in list) {
+            ind += 1
+            if (element == number / 2) {
+                j1 = j2
+                j2 = ind
+            }
+        }
+    }
+    if (j1 != -1) {
+        return Pair(j1, j2)
+    }
+    for (element in set) {
+        if ((number - element in set) && (list.indexOf(element) != list.indexOf(number - element))) {
+            j1 = list.indexOf(element)
+            j2 = list.indexOf(number - element)
+            return Pair(j1, j2)
+        }
+    }
+    return Pair(-1, -1)
+}
+
 
 /**
  * Очень сложная (8 баллов)

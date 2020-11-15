@@ -2,6 +2,13 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+import java.lang.IllegalArgumentException
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
+import kotlin.NumberFormatException
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +81,23 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val dictionary = mapOf("января" to 1, "февраля" to 2, "марта" to 3, "апреля" to 4, "мая" to 5,
+    "июня" to 6, "июля" to 7, "августа" to 8, "сентября" to 9, "октября" to 10, "ноября" to 11,
+    "декабря" to 12)
+    val dates = str.split(" ")
+    return try {
+        if (dates.size != 3) throw NumberFormatException("For input string: $str")
+        val day = dates[0].toInt()
+        val year = dates[2].toInt()
+        val month = dictionary[dates[1]] ?: throw NumberFormatException("For input string: ${dates[1]}")
+        if (day > daysInMonth(month, year)) throw NumberFormatException("For input string: $day")
+        String.format("%02d.%02d.%01d", day, month, year)
+    } catch (e: NumberFormatException) {
+        ""
+    }
+}
+
 
 /**
  * Средняя (4 балла)
@@ -86,7 +109,23 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val dictionary = mapOf("01" to "января", "02" to "февраля", "03" to "марта", "04" to "апреля", "05" to "мая",
+    "06" to "июня", "07" to "июля", "08" to "августа", "09" to "сентября", "10" to "октября", "11" to "ноября",
+    "12" to "декабря")
+    val dates = digital.split(".")
+    return try {
+        if (dates.size != 3) throw NumberFormatException("For input string: $digital")
+        val day = dates[0].toInt()
+        val year = dates[2].toInt()
+        val month01 = dates[1].toInt()
+        val month = dictionary[dates[1]] ?: throw NumberFormatException("For input string: ${dates[1]}")
+        if (day > daysInMonth(month01, year)) throw NumberFormatException("For input string: $day")
+        String.format("%01d %s %01d", day, month, year)
+    } catch (e: NumberFormatException) {
+        ""
+    }
+}
 
 /**
  * Средняя (4 балла)
@@ -139,6 +178,7 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int = TODO()
+
 
 /**
  * Сложная (6 баллов)
