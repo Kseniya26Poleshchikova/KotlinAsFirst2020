@@ -82,9 +82,11 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val dictionary = mapOf("января" to 1, "февраля" to 2, "марта" to 3, "апреля" to 4, "мая" to 5,
-    "июня" to 6, "июля" to 7, "августа" to 8, "сентября" to 9, "октября" to 10, "ноября" to 11,
-    "декабря" to 12)
+    val dictionary = mapOf(
+        "января" to 1, "февраля" to 2, "марта" to 3, "апреля" to 4, "мая" to 5,
+        "июня" to 6, "июля" to 7, "августа" to 8, "сентября" to 9, "октября" to 10, "ноября" to 11,
+        "декабря" to 12
+    )
     val dates = str.split(" ")
     return try {
         if (dates.size != 3) throw NumberFormatException("For input string: $str")
@@ -110,9 +112,11 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    val dictionary = mapOf("01" to "января", "02" to "февраля", "03" to "марта", "04" to "апреля", "05" to "мая",
-    "06" to "июня", "07" to "июля", "08" to "августа", "09" to "сентября", "10" to "октября", "11" to "ноября",
-    "12" to "декабря")
+    val dictionary = mapOf(
+        "01" to "января", "02" to "февраля", "03" to "марта", "04" to "апреля", "05" to "мая",
+        "06" to "июня", "07" to "июля", "08" to "августа", "09" to "сентября", "10" to "октября", "11" to "ноября",
+        "12" to "декабря"
+    )
     val dates = digital.split(".")
     return try {
         if (dates.size != 3) throw NumberFormatException("For input string: $digital")
@@ -202,7 +206,22 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val nameString = description.split("; ", " ")
+    var res = "" to -1.0
+    return try {
+        if (nameString.size % 2 != 0) throw NumberFormatException("For input string: $description")
+        for (i in 1..nameString.size step 2) {
+            val price = nameString[i].toDouble()
+            val prod = nameString[i - 1]
+            if (price < 0) throw NumberFormatException("For input string: $description")
+            if (price > res.second) res = prod to price
+        }
+        res.first
+    } catch (e: NumberFormatException) {
+        ""
+    }
+}
 
 /**
  * Сложная (6 баллов)
@@ -216,6 +235,7 @@ fun mostExpensive(description: String): String = TODO()
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int = TODO()
+
 
 /**
  * Очень сложная (7 баллов)
