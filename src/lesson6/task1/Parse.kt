@@ -196,7 +196,7 @@ fun firstDuplicateIndex(str: String): Int {
     val nameString = str.split(" ")
     var n = 0
     for (i in 0 until nameString.size - 1) {
-        if (nameString[i].toLowerCase() == nameString[i + 1].toLowerCase()) {
+        if (nameString[i].equals(nameString[i + 1], ignoreCase = true)) {
             return n
         }
         n += nameString[i].length + 1
