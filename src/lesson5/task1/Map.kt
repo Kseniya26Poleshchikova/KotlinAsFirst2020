@@ -4,6 +4,7 @@ package lesson5.task1
 
 import kotlinx.html.Entities
 import lesson8.task1.findNearestCirclePair
+import ru.spbstu.wheels.sorted
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -290,30 +291,13 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    var ind = -1
-    var j1 = -1
-    var j2 = -1
-    val set = list.toSet()
-    if (number % 2 == 0) {
-        for (element in list) {
-            ind += 1
-            if (element == number / 2) {
-                j1 = j2
-                j2 = ind
-            }
-        }
-    }
-    if (j1 != -1) {
-        return Pair(j1, j2)
-    }
-    for (element in set) {
-        if ((number - element in set) && (list.indexOf(element) != list.indexOf(number - element))) {
-            j1 = list.indexOf(element)
-            j2 = list.indexOf(number - element)
-            return Pair(j1, j2)
-        }
-    }
-    return Pair(-1, -1)
+    var res = Pair(-1, -1)
+    val n = mutableMapOf<Int, Int>()
+    for (i in list.indices)
+        if (number - list[i] in n.keys) res = n[number - list[i]]!! to i
+        else n[list[i]] = i
+
+    return res.sorted()
 }
 
 
