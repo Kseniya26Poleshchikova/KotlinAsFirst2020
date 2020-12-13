@@ -63,7 +63,14 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    TODO()
+    File(outputName).bufferedWriter().use {
+        for (line in File(inputName).readLines()) {
+            if (!line.startsWith("_")) {
+                it.write(line)
+                it.newLine()
+            }
+        }
+    }
 }
 
 /**
@@ -113,7 +120,18 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val text = File(outputName).bufferedWriter()
+    var max = 0
+    File(inputName).forEachLine {
+        if (it.trim().length > max) max = it.trim().length
+    }
+    text.use {
+        File(inputName).forEachLine { line ->
+            for (i in 1..(max - line.trim().length) / 2) it.write(" ")
+            text.write(line.trim())
+            text.newLine()
+        }
+    }
 }
 
 /**
@@ -144,7 +162,35 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    val strings = File(inputName).readLines()
+    val rStrings = mutableListOf<String>()
+    var mString = ""
+    for (i in strings) {
+        val stringWithoutSpace = i.trim()
+        while ("  " in stringWithoutSpace)
+            stringWithoutSpace.replace("  ", " ")
+        rStrings.add(stringWithoutSpace)
+    }
+
+    for (i in rStrings)
+        if (i.length > mString.length)
+            mString = i
+    for (i in rStrings) {
+        var count = i.length
+        val wList = i.split(" ").toMutableList()
+        if (wList.size > 1)
+            while (count != mString.length) {
+                for (index in 1 until wList.size) {
+                    wList[index] = " " + wList[index]
+                    count++
+                    if (count == mString.length) break
+                }
+            }
+        writer.write(wList.joinToString(" "))
+        writer.newLine()
+    }
+    writer.close()
 }
 
 /**
