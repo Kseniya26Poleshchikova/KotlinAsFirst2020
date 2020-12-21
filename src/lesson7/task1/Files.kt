@@ -164,28 +164,23 @@ fun centerFile(inputName: String, outputName: String) {
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
-    val strings = File(inputName).readLines()
     val rStrings = mutableListOf<String>()
-    var mString = ""
-    for (i in strings) {
-        val stringWithoutSpace = i.trim()
-        while ("  " in stringWithoutSpace)
-            stringWithoutSpace.replace("  ", " ")
-        rStrings.add(stringWithoutSpace)
+    val regex = Regex("\\s+")
+    var maxLen = -1
+    File(inputName).forEachLine { line ->
+        val line1 = line.replace(regex, " ").trim()
+        if (line1.length > maxLen) maxLen = line1.length
+        rStrings.add(line1)
     }
-
-    for (i in rStrings)
-        if (i.length > mString.length)
-            mString = i
     for (i in rStrings) {
         var count = i.length
         val wList = i.split(" ").toMutableList()
         if (wList.size > 1)
-            while (count != mString.length) {
+            while (count != maxLen) {
                 for (index in 1 until wList.size) {
                     wList[index] = " " + wList[index]
                     count++
-                    if (count == mString.length) break
+                    if (count == maxLen) break
                 }
             }
         writer.write(wList.joinToString(" "))
