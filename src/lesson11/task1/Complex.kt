@@ -2,6 +2,7 @@
 
 package lesson11.task1
 
+import kotlinx.html.Entities
 import lesson1.task1.sqr
 import java.util.Collections.max
 
@@ -15,8 +16,22 @@ import java.util.Collections.max
  * Аргументы конструктора -- вещественная и мнимая часть числа.
  */
 
-class Complex(var re: Double, var im: Double) {
 
+
+private fun stringComplex(s: String): Complex {
+    var re = 0.0
+    var im = 0.0
+    val s1 = Regex("""\s""").replace(s, "")
+    val sRegex = Regex("""(-?\d+(?:\.\d+)?)?(?:([-+]\d+(?:\.\d+)?)i)?""").matchEntire(s1)?.groupValues
+    if ((sRegex == null)) throw IllegalStateException()
+    if (sRegex[1] != "") re = sRegex[1].toDouble()
+    if (sRegex[2] != "") im = sRegex[2].toDouble()
+    return Complex(re, im)
+}
+
+
+
+class Complex(val re: Double, val im: Double) {
 
     /**
      * Конструктор из вещественного числа
@@ -26,19 +41,7 @@ class Complex(var re: Double, var im: Double) {
     /**
      * Конструктор из строки вида x+yi
      */
-    constructor(s: String) : this(re = 0.0, im = 0.0) {
-        when {
-            s.matches(Regex("""^-?\d+(\.\d+)*$""")) -> re = s.toDouble()
-            s.matches(Regex("""^-?\d+(\.\d+)*i$""")) -> im = s.substring(0..s.lastIndex - 1).toDouble()
-            s.matches(Regex("""^-?\d+(\.\d+)*[-+]\d+(\.\d+)*i$""")) -> {
-                val j = s.indexOf('+', 1)
-                val z = s.indexOf('-', 1)
-                val i = if (j > z) j else z
-                re = s.substring(0.. i - 1).toDouble()
-                im = s.substring(i.. s.lastIndex - 1).toDouble()
-            } else -> throw IllegalStateException()
-        }
-    }
+    constructor(s: String) : this(stringComplex(s).re, stringComplex(s).im)
 
     /**
      * Сложение.
