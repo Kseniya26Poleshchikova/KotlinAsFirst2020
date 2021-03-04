@@ -19,7 +19,8 @@ package lesson12.task1
  */
 class PhoneBook {
     private val mapPhoneBook = mutableMapOf<String, MutableSet<String>>()
-     /**
+
+    /**
      * Добавить человека.
      * Возвращает true, если человек был успешно добавлен,
      * и false, если человек с таким именем уже был в телефонной книге
@@ -37,7 +38,7 @@ class PhoneBook {
      * и false, если человек с таким именем отсутствовал в телефонной книге
      * (во втором случае телефонная книга не должна меняться).
      */
-    fun removeHuman(name: String): Boolean = mapPhoneBook.remove(name, mutableSetOf())
+    fun removeHuman(name: String): Boolean = mapPhoneBook.remove(name) != null
 
     /**
      * Добавить номер телефона.
@@ -49,7 +50,8 @@ class PhoneBook {
     fun addPhone(name: String, phone: String): Boolean {
         val phoneOfHuman = mapPhoneBook[name]
         if (phoneOfHuman == null || phone in phoneOfHuman
-            || mapPhoneBook.values.any { it.contains(phone) }) return false
+            || mapPhoneBook.values.any { it.contains(phone) }
+        ) return false
         phoneOfHuman.add(phone)
         return true
     }

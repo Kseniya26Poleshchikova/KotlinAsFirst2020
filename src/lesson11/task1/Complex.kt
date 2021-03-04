@@ -16,9 +16,10 @@ import java.util.Collections.max
  * Аргументы конструктора -- вещественная и мнимая часть числа.
  */
 
-
-
-private fun stringComplex(s: String): Complex {
+/**
+ * функция "constructor-like" из строки вида x+yi
+ */
+fun Complex(s: String): Complex {
     var re = 0.0
     var im = 0.0
     val s1 = Regex("""\s""").replace(s, "")
@@ -38,10 +39,6 @@ class Complex(val re: Double, val im: Double) {
      */
     constructor(x: Double) : this(x, 0.0)
 
-    /**
-     * Конструктор из строки вида x+yi
-     */
-    constructor(s: String) : this(stringComplex(s).re, stringComplex(s).im)
 
     /**
      * Сложение.
@@ -61,13 +58,16 @@ class Complex(val re: Double, val im: Double) {
     /**
      * Умножение
      */
-    operator fun times(other: Complex): Complex = Complex(re * other.re - im * other.im,
-        re * other.im + im * other.re)
+    operator fun times(other: Complex): Complex = Complex(
+        re * other.re - im * other.im,
+        re * other.im + im * other.re
+    )
 
     /**
      * Деление
      */
-    operator fun div(other: Complex): Complex = Complex((re * other.re + im * other.im) / (sqr(other.re) + sqr(other.im)),
+    operator fun div(other: Complex): Complex = Complex(
+        (re * other.re + im * other.im) / (sqr(other.re) + sqr(other.im)),
         (im * other.re - re * other.im) / (sqr(other.re) + sqr(other.im))
     )
 
